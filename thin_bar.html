@@ -1,0 +1,64 @@
+<!-- thin_bar.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thin Bar UI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Thin bar height */
+            background-color: #3498db;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        #download-options, #subscribe-btn {
+            display: none; /* Initially hidden */
+        }
+
+        .button {
+            background-color: white;
+            color: #3498db;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="bar">
+        <div id="platform-info">
+            <span id="current-platform">YouTube / Instagram</span>
+        </div>
+        <div id="download-options">
+            <button class="button">Download Video</button>
+        </div>
+        <div id="subscribe-btn">
+            <button class="button">Subscribe to Profile</button>
+        </div>
+    </div>
+
+    <script src="thin_bar.js"></script>
+</body>
+</html>

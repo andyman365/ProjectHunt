@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plugin UI</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .mode {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .download-section {
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-list label {
+            margin: 5px 0;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            width: 100%;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            background-color: #e1f5fe;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Mode: <span id="current-mode">Search Mode</span></h1>
+        <div class="mode">
+            <button id="check-mode">Check Mode</button>
+            <button id="update-mode">Update Mode</button>
+        </div>
+        <div class="buttons">
+            <button id="list-videos">List All Videos</button>
+            <button id="download-video">Download Current Video</button>
+            <button id="add-profile">Add Current Profile</button>
+        </div>
+
+        <div class="download-section">
+            <h2>Download Options</h2>
+            <div class="checkbox-list">
+                <label><input type="checkbox" value="ep"> EP</label>
+                <label><input type="checkbox" value="above"> Above Everything</label>
+                <label><input type="checkbox" value="normal"> Normal</label>
+            </div>
+            <div class="where-to-download">
+                <h3>Where to Download:</h3>
+                <label><input type="radio" name="download-location" value="ep"> EP</label>
+                <label><input type="radio" name="download-location" value="above"> Above Everything</label>
+                <label><input type="radio" name="download-location" value="normal" checked> Normal</label>
+            </div>
+        </div>
+
+        <div id="output">Test output</div>
+        <div class="info-box">
+            <h3>Current Active Link Info:</h3>
+            <p><strong>Current URL:</strong> <span id="current-url">N/A</span></p>
+            <p><strong>Current Platform:</strong> <span id="current-platform">N/A</span></p>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

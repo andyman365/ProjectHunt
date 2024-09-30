@@ -1,0 +1,186 @@
+https://www.w3schools.com/nodejs/nodejs_mysql.asp
+https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install
+https://expressjs.com/en/guide/database-integration.html
+https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
+https://stackoverflow.com/questions/260441/how-to-create-relationships-in-mysql
+
+CREATE USER 'pluginuser'@'localhost' IDENTIFIED BY 'Godverdomme';
+GRANT ALL PRIVILEGES ON mysql.* TO 'pluginuser'@'localhost' 
+
+if i load vioodeos, check if i already downloaded it
+if i open a insta page: check if i already added to subs
+if i open a insta page: check if i already visited it
+
+if its added to the sub list, it shows a  blue border around the entire page
+	-> on the top of the page it shows the stats: to which category it blongs(can be several)
+	-> how many vids have been downloaded
+	-> it shows what videos ive already watched in blue, 
+	-> it shows the videos that has been added since the last time i opened the page
+	-> it shows if it has screenshots attached
+	-> it shows the attached info text (socials - age (at what date entered))
+	-> extra screen with screenshots of all saved videos
+It saves all the pages i visited + date when i visited it last + the most recent video at the time of visiting
+	when u visit a page, it automatically saves the current data as a new visit, but when it shows the satsitics of the page, it shows the date that is not today. If it is today or empty; it shows: today is the first day
+
+add a page to the sub list : several categories : extreme slutty - all vids - few good - 
+	-> Link to agevideo - 
+	-> HAVE TO FIND A WAY TO QUICKLY ADD SCREENSHOTS TO HER INFO sO WHEN YOU LOAD A PAGE IT SHOWS: IT HAS ATTACHED SCREENSHOTS
+
+button: add page to tocheck list 
+
+3 modes : hunt mode : find new profile
+			check mode : check the profiles added from the hunt
+			uypdate mode : check the profiles u already subbed to to see if they have good new vids: divided in 3 sections : most popular , good ones, all the rest - 
+				update mode for youtube just shows all videos on one page. But for insta; you just go to each page (button on top next and back) and then you can see the videos that were added since your last visit 
+
+button: load hunt-mode : ment for playlist : 
+	it adds a border around the entire page if its already visited + shows if it already got flagged as complete and the date it got flagged complete (still worth to check if  new ones got added) + the current amount of videos + 
+	it adds a border + buttons around all thumbs: 
+	-general button: mark playlist as complete : marks the playlist as complete and which date - number of videos in the playlist 
+	-Button: add to tocheck list (it adds to tocheck list + downloads sperately in a seperate folder just to have it at the top of the page to know which video u loaded it from)
+	-Border : red + green: already visited nothing saved but this video didnt exist yuet 
+				red : already visted nothing saved, this video existed already
+				green: already visited and added to subs
+				yellow: already visited and saved but not added to subs
+
+				no border: not yet visited 
+
+check mode : loads a profile one at a time from the list of porifles to check
+	at the top the video where it got loaded from
+	option : 
+
+
+ProfileCategory
+latina
+totalSlut
+SkimpyAndPerky
+PlainPretty
+promising
+HasContactInfo
+
+VidCategory
+above everything
+ep
+ass
+slutty
+flash
+SkimpyAndPerky
+bikini 
+
+
+
+
+database : 
+table: profiles 
+	
+create table profiles (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, url varchar(255) NOT NULL , platform varchar(255), category varchar(255), dateposted TIMESTAMP DEFAULT CURRENT_TIMESTAMP, datelastvisit TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dateofbirth TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,userid varchar(255) ,username varchar(255) , comments varchar(1000), deleted BOOLEAN NOT NULL DEFAULT FALSE ) 
+
+table videos :
+
+create table videos (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, videoid varchar(255), profile_id int, url varchar(255) NOT NULL ,platform varchar(255), category varchar(255) NOT NULL, dateposted TIMESTAMP DEFAULT CURRENT_TIMESTAMP, datesaved TIMESTAMP DEFAULT CURRENT_TIMESTAMP, thumbnail varchar(255) , downloadedintheoldways BOOLEAN NOT NULL DEFAULT FALSE, CONSTRAINT fk_profile FOREIGN KEY (profile_id) REFERENCES profiles(id) );
+
+
+table: Playlists
+
+table: visits 
+	-> amount of vids total (youtube shorts + videos + live , for insta : amount of posts at the top of the page) , date, profileID, the most recent video, dateOfMostRecentVid
+
+create table visits (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, profileid int, url varchar(255) NOT NULL ,  datevisit TIMESTAMP DEFAULT CURRENT_TIMESTAMP, mostrecentvideo varchar(255), dateofmostrecentvideo  TIMESTAMP DEFAULT CURRENT_TIMESTAMP) 
+
+
+
+table playlists
+	->last visited, completed?, amountOfVidsAtLastVisit
+table:Subs:
+	->profileID,date added, 
+profileCategorytosubs (manytomany):
+	->id , profileID, categoryID 
+profileCategorys:
+	->ID, profileCategory
+videoCategorysTovids (manytomany);
+	->ID, VIDEOID
+videocategorys;
+	->ID, VideoCategory
+porofileTofulldownload
+	->profileID, amount of vids downloaded , amount of vids at last check, last check, last download, dateoflastvideouploaded
+useridtochannelid connection (in case a channel gets deleted: check if the related channel is is still available	)
+Main UI : Current mode : xxxx
+			load hunt mode -- load check mode -- load update mode--
+			-info about current open page :
+			-Subbed date : - or button: sub
+			-platform : youtube	
+				amount of vids now
+				last visited (before today) (the visit before today)
+				amount of vids at last visit
+
+for chatgpt: 
+I am creating a web ui for my plugin . At the top of the ui it has a text box with "current mode" and then the mode it is in. (modes will be implemented later but default is search mode)
+then three buttons to go to one of the two other modes 'check mode, update mode '
+then the 3 buttons that already exist: download video, add profile, list video, But the download video is in a seperate div with a border that has 2 lists: one list : where do download : "ep" and "above verything" and normale, and then One lsit of cehcklbox category. and categories are normal, ep, above everything 
+then the output text
+then a box with several info about the current active Link
+	to begin it only shows the current url and the current platform
+
+implement first : general usage :
+	0.1Create database: table: profiles
+	1. save all visited profiles to a database
+	2. add a quick download button (where to download ? 3 main folders + checkmark if i want to download to above everything, + checkmarks of the categories )
+	3. adds the info of the downloaded video to a database 
+	4. Adds border if i already visited
+	5. work on the main ui :
+		1. nfo about current open page 
+		2.Sub info
+	6.implement subbing functionality
+		1...
+		2...
+	7.Implement hunt mode
+		-add playlist to playlist info 
+	8.Implement update mode
+
+
+
+
+
+    --create table export:
+    CREATE TABLE `profiles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `platform` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `dateposted` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `datelastvisit` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateofbirth` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `userid` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `comments` varchar(1000) DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+
+CREATE TABLE `videos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `videoid` varchar(255) DEFAULT NULL,
+  `profile_id` int DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
+  `platform` varchar(255) DEFAULT NULL,
+  `category` varchar(255) NOT NULL,
+  `dateposted` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `datesaved` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `downloadedintheoldways` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_profile` (`profile_id`),
+  CONSTRAINT `fk_profile` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+
+REATE TABLE `visits` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `profile_id` int NOT NULL,
+  `visited_url` varchar(255) NOT NULL,
+  `visit_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `mostrecentvideo` varchar(255) DEFAULT NULL,
+  `dateofmostrecentvideo` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_visit2profile` (`profile_id`),
+  CONSTRAINT `fk_visit2profile` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci 
